@@ -1,2 +1,2 @@
-import DragTextEditor from './src/DragTextEditor';
+import DragTextEditor from './DragTextEditor';
 export  { DragTextEditor };
