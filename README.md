@@ -30,7 +30,7 @@ React Native Draggable & Editable & Resizable Text Component,still in early deve
 ## Installation
 
 ```sh
-$ npm install react-native-drag-text-editor --save
+$ npm install @toryshadow/react-native-drag-text-editor --save
 ```
 
 ## Usage
