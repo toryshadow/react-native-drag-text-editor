@@ -437,6 +437,57 @@ export default class DragTextEditor extends Component {
     } else null;
   }
 
+  renderTextInput = () => {
+    if (this.state.giveInput) {
+      return (
+        <TextInput
+          style={{
+            zIndex: 10000,
+            elevation: 0.01,
+            fontFamily: this.props.FontFamily,
+            color: this.props.FontColor,
+            fontSize: this.props.FontSize,
+            letterSpacing: this.props.LetterSpacing,
+            textAlignVertical: 'center',
+            backgroundColor: this.props.BackgroundColor,
+            textAlign: this.props.TextAlign,//'right',
+            lineHeight: this.props.LineHeight,
+            fontWeight: 'normal',
+            overflow: 'hidden',
+            margin: 10,
+            padding: 5,
+          }}
+          selectTextOnFocus={true}
+          multiline={true}
+          autoFocus={true}
+          onChangeText={(text) => this.onText(text)}
+          value={this.state.text}
+        />
+      )
+    }
+    return (
+      <Text
+        style={{
+          fontFamily: this.props.FontFamily,
+          color: this.props.FontColor,
+          fontSize: this.props.FontSize,
+          letterSpacing: this.props.LetterSpacing,
+          textAlignVertical: 'center',
+          backgroundColor: this.props.BackgroundColor,
+          textAlign: this.props.TextAlign,//'right',
+          lineHeight: this.props.LineHeight,
+          fontWeight: 'normal',
+          overflow: 'hidden',
+          display: 'flex',
+          margin: 10,
+          padding: 5,
+        }}
+      >
+        {this.state.text}
+      </Text>
+    )
+  }
+
   render() {
     const {
       x,
@@ -454,7 +505,6 @@ export default class DragTextEditor extends Component {
           width: w,
           padding: HOLDER_SIZE / 2,
         }}>
-
         <TouchableOpacity
           onPress={() => this.validPress()}
           style={{
@@ -463,54 +513,8 @@ export default class DragTextEditor extends Component {
             height: "100%",
             borderColor: isBorder ? "transparent" : "black"
           }}>
-
-
           <View style={{borderColor: isBorder ? "transparent" : "white", borderWidth: 1}} onLayout={this.calcLayout}>
-            {this.state.giveInput ?
-              <TextInput
-                style={{
-                  zIndex: 10000,
-                  elevation: 0.01,
-                  fontFamily: this.props.FontFamily,
-                  color: this.props.FontColor,
-                  fontSize: this.props.FontSize,
-                  letterSpacing: this.props.LetterSpacing,
-                  textAlignVertical: 'center',
-                  backgroundColor: this.props.BackgroundColor,
-                  textAlign: this.props.TextAlign,//'right',
-                  lineHeight: this.props.LineHeight,
-                  fontWeight: 'normal',
-                  overflow: 'hidden',
-                  margin: 10,
-                  padding: 5,
-                }}
-                selectTextOnFocus={true}
-                multiline={true}
-                autoFocus={true}
-                onChangeText={(text) => this.onText(text)}
-                value={this.state.text}
-              />
-              :
-              <Text
-                style={{
-                  fontFamily: this.props.FontFamily,
-                  color: this.props.FontColor,
-                  fontSize: this.props.FontSize,
-                  letterSpacing: this.props.LetterSpacing,
-                  textAlignVertical: 'center',
-                  backgroundColor: this.props.BackgroundColor,
-                  textAlign: this.props.TextAlign,//'right',
-                  lineHeight: this.props.LineHeight,
-                  fontWeight: 'normal',
-                  overflow: 'hidden',
-                  display: 'flex',
-                  margin: 10,
-                  padding: 5,
-                }}
-              >
-                {this.state.text}
-              </Text>
-            }
+            {this.props.customChild ? this.props.customChild() : this.renderTextInput()}
           </View>
         </TouchableOpacity>
         {isBorder ? null : this.renderholders()}
@@ -588,6 +592,7 @@ DragTextEditor.defaultProps = {
   onResizeEnd: null,
   onFocus: null,
   handleFocus: null,
+  customChild: null,
 };
 
 DragTextEditor.propTypes = {
@@ -626,4 +631,5 @@ DragTextEditor.propTypes = {
   onResizeEnd: PropTypes.func,
   onFocus: PropTypes.func,
   handleFocus: PropTypes.func,
+  customChild: PropTypes.func,
 };
