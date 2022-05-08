@@ -173,8 +173,12 @@ export default class DragTextEditor extends Component {
       this.props.onFocus(this.state.isBorder);
     }
 
-    if (this.props.handleFocus && !prevProps.handleFocus) {
-      this.setState({ isBorder: true })
+    if (this.props.handleFocus !== prevProps.handleFocus) {
+      this.setState({ isBorder: this.props.handleFocus })
+    }
+
+    if (this.props.w !== prevProps.w) {
+      this.setState({ w: this.props.w })
     }
   }
 
@@ -195,7 +199,7 @@ export default class DragTextEditor extends Component {
     return (
       <TouchableOpacity
         onPress={() => !this.props.TopLeftAction ? this.isBorder() : this.props.TopLeftAction()}
-        style={styles.Top}>
+        style={[styles.Top, this.props.TopLeftStyles]}>
         {this.props.TopLeftIcon === null ?
           <Image style={styles.ico} source={COMPASS_ICON}/>
           : this.props.TopLeftIcon
@@ -612,6 +616,7 @@ DragTextEditor.propTypes = {
   TopLeftAction: PropTypes.func,
   TopRightAction: PropTypes.func,
   TopLeftIcon: PropTypes.func,
+  TopLeftStyles: PropTypes.object,
   TopRightIcon: PropTypes.func,
   FontFamily: PropTypes.string,
   LetterSpacing: PropTypes.number,
