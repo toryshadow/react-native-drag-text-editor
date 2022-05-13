@@ -173,8 +173,8 @@ export default class DragTextEditor extends Component {
       this.props.onFocus(this.state.isBorder);
     }
 
-    if (this.props.handleFocus !== prevProps.handleFocus) {
-      this.setState({ isBorder: this.props.handleFocus })
+    if (!this.props.handleFocus && prevProps.handleFocus) {
+      this.setState({ isBorder: true })
     }
 
     if (this.props.w !== prevProps.w) {
@@ -223,6 +223,9 @@ export default class DragTextEditor extends Component {
   }
 
   childML = () => {
+    if (this.props.customMove) {
+      return this.props.customMove();
+    }
     return (
       <View style={styles.holder}/>
     )
@@ -597,6 +600,7 @@ DragTextEditor.defaultProps = {
   onFocus: null,
   handleFocus: null,
   customChild: null,
+  customMove: null,
 };
 
 DragTextEditor.propTypes = {
@@ -637,4 +641,5 @@ DragTextEditor.propTypes = {
   onFocus: PropTypes.func,
   handleFocus: PropTypes.func,
   customChild: PropTypes.func,
+  customMove: PropTypes.func,
 };
