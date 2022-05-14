@@ -223,16 +223,13 @@ export default class DragTextEditor extends Component {
   }
 
   childML = () => {
-    if (this.props.customMove) {
-      return this.props.customMove();
-    }
     return (
-      <View style={styles.holder}/>
+      <View style={[styles.holder, this.props.customHolder]}/>
     )
   }
   childMR = () => {
     return (
-      <View style={styles.holder}/>
+      <View style={[styles.holder, this.props.customHolder]}/>
     )
   }
 
@@ -600,7 +597,7 @@ DragTextEditor.defaultProps = {
   onFocus: null,
   handleFocus: null,
   customChild: null,
-  customMove: null,
+  customHolder: null,
 };
 
 DragTextEditor.propTypes = {
@@ -641,5 +638,5 @@ DragTextEditor.propTypes = {
   onFocus: PropTypes.func,
   handleFocus: PropTypes.func,
   customChild: PropTypes.func,
-  customMove: PropTypes.func,
+  customHolder: PropTypes.object,
 };
